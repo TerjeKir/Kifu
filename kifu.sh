@@ -107,9 +107,12 @@ for move in $moves; do
   dest=${move:3:2}
   piece_romaji=${move:5:2}
 
-  # Check for game over (S"EN"TE/G"OT"E WIN)
+  # Check for game over (S"EN"TE/G"OT"E WIN, D"RA"W)
   if [[ $orig == "EN" || $orig == "OT" ]]; then
     printf "%s 投了" $move_count >> $filename
+    exit
+  elif [ $orig == "RA" ]; then
+    printf "%s 千日手" $move_count >> $filename
     exit
   fi
 
