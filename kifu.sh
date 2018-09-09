@@ -21,16 +21,37 @@ source=${source#*dan0: \"}
 player_one_dan=${source%%\"*}
 source=${source#*dan1: \"}
 player_two_dan=${source%%\"*}
+source=${source#*gtype: \"}
+gametype=${source%%\"*}
 source=${source#*receiveMove(\"}
 moves=${source%%\"*}
 
 # Make the filename to save the kifu in
 printf -v filename "%s-%s-%s.kif" $player_one $player_two $hiduke
 
+# For use in header
+printf -v date_print1 "%s/%s/%s" ${hiduke:0:4} ${hiduke:4:2} ${hiduke:6:2}
+printf -v date_print2 "%s:%s:%s" ${hiduke:9:2} ${hiduke:11:2} ${hiduke:13:2}
+
+gametype_print="10切"
+mochijikan="10分切れ負け"
+if [ $gametype == "sb" ]; then
+  gametype_print="3切"
+  mochijikan="3分切れ負け"
+elif [ $gametype == "s1" ]; then
+  gametype_print="10秒将棋"
+fi
+
 # Print the player info and header
-printf "先手：%s %s\n" $player_one $player_one_dan > $filename
-printf "後手：%s %s\n" $player_two $player_two_dan >> $filename
-echo "手数----指手--" >> $filename
+printf "開始日時：%s %s\r\n" $date_print1 $date_print2 > $filename
+printf "棋戦：将棋ウォーズ(%s)\r\n"  $gametype_print >> $filename
+if [ ! $gametype == "s1" ]; then
+  printf "持ち時間：%s\r\n" $mochijikan >> $filename
+fi
+printf "手合割：平手\r\n" >> $filename
+printf "先手：%s %s\r\n" $player_one $player_one_dan >> $filename
+printf "後手：%s %s\r\n" $player_two $player_two_dan >> $filename
+printf "手数----指手---------消費時間--\r\n" >> $filename
 
 # Track whether or not the piece in a position is promoted
 declare -A promoted_in_position
@@ -109,10 +130,12 @@ for move in $moves; do
 
   # Check for game over (S"EN"TE/G"OT"E WIN, D"RA"W)
   if [[ $orig == "EN" || $orig == "OT" ]]; then
-    printf "%s 投了" $move_count >> $filename
+    printf "%s 投了\r\n" $move_count >> $filename
+    printf "\nSuccess: %s%s\n" $PWD $filename
     exit
   elif [ $orig == "RA" ]; then
-    printf "%s 千日手" $move_count >> $filename
+    printf "%s 千日手\r\n" $move_count >> $filename
+    printf "\nSuccess: %s%s\n" $PWD $filename
     exit
   fi
 
@@ -141,7 +164,7 @@ for move in $moves; do
   fi
 
   # print the move in kifu format
-  printf "%s %s%s%s\n" $move_count $dest $piece $uchi >> $filename
+  printf "%s %s%s%s\r\n" $move_count $dest $piece $uchi >> $filename
   ((++move_count))
 done
 
