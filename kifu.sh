@@ -132,11 +132,11 @@ for move in $moves; do
   if [[ $orig == "EN" || $orig == "OT" ]]; then
     printf "%s 投了\r\n" $move_count >> $filename
     printf "\nSuccess: %s%s\n" $PWD $filename
-    exit
+    break
   elif [ $orig == "RA" ]; then
     printf "%s 千日手\r\n" $move_count >> $filename
     printf "\nSuccess: %s%s\n" $PWD $filename
-    exit
+    break
   fi
 
   # Get the piece name in kanji
@@ -168,20 +168,5 @@ for move in $moves; do
   ((++move_count))
 done
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
+kifu=$(<$filename)
+printf "$kifu" | clip.exe
