@@ -130,6 +130,8 @@ for move in $moves; do
     if [ ${piece:1:1} == "成" ]; then
       promoted_in_position[${dest:0:1},${dest:1:1}]=true
     fi
+  elif [ ${promoted_in_position[${dest:0:1},${dest:1:1}]} == true ]; then
+    promoted_in_position[${dest:0:1},${dest:1:1}]=false
   fi
 
   # uchi holds either "(orig)" or "打" for printing
