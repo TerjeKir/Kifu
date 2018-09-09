@@ -29,10 +29,9 @@ moves=${source%%\"*}
 # Make the filename to save the kifu in
 printf -v filename "%s-%s-%s.kif" $player_one $player_two $hiduke
 
-# For use in header
+# Variables for use in header
 printf -v date_print1 "%s/%s/%s" ${hiduke:0:4} ${hiduke:4:2} ${hiduke:6:2}
 printf -v date_print2 "%s:%s:%s" ${hiduke:9:2} ${hiduke:11:2} ${hiduke:13:2}
-
 gametype_print="10切"
 mochijikan="10分切れ負け"
 if [ $gametype == "sb" ]; then
@@ -145,6 +144,7 @@ for move in $moves; do
     already_promoted=${promoted_in_position[${orig:0:1},${orig:1:1}]}
   fi
   piece=$(translate_piece $piece_romaji $already_promoted)
+
   # Update the promoted_in_position matrix
   if [ $already_promoted == true ]; then
     promoted_in_position[${dest:0:1},${dest:1:1}]=true
