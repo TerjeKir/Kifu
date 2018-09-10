@@ -168,5 +168,10 @@ for move in $moves; do
   ((++move_count))
 done
 
+# Copy the kifu to clipboard
 kifu=$(<$filename)
 printf "$kifu" | clip.exe
+
+# Convert the .kif file to SJIS encoding so Shogi GUI can open it
+iconv -f UTF-8 -t SJIS $filename > "$filename.new"
+mv -f "$filename.new" $filename
