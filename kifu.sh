@@ -34,11 +34,13 @@ printf -v date_print1 "%s/%s/%s" ${hiduke:0:4} ${hiduke:4:2} ${hiduke:6:2}
 printf -v date_print2 "%s:%s:%s" ${hiduke:9:2} ${hiduke:11:2} ${hiduke:13:2}
 gametype_print="10切"
 mochijikan="10分切れ負け"
-if [ $gametype == "sb" ]; then
-  gametype_print="3切"
-  mochijikan="3分切れ負け"
-elif [ $gametype == "s1" ]; then
-  gametype_print="10秒将棋"
+if [ $gametype ]; then
+  if [ $gametype == "sb" ]; then
+    gametype_print="3切"
+    mochijikan="3分切れ負け"
+  elif [ $gametype == "s1" ]; then
+    gametype_print="10秒将棋"
+  fi
 fi
 
 # Print the player info and header
