@@ -1,8 +1,8 @@
 # Kifu
-Bash script for saving kifu from Shogi Warz replay sites
+Python script for saving kifu from Shogi Wars replay sites
 
-This script reads the source of websites like
- - shogiwars.heroz.jp:3002/games/fujiiyodandayo-Drttfffddssff-20180821_212724
- - kif-pona.heroz.jp/games/Drttfffddssff-Capybarakun-20180906_071821
- 
-extracts the information required, and constructs a kifu file
+Reads the source of websites like
+ - https://shogiwars.heroz.jp/games/haly__-Drttfffddssff-20190619_055357
+
+extracts the information required, and constructs a .kif file
+usable with for example ShogiGUI.
